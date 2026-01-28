@@ -18,34 +18,19 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const category_entity_1 = require("./category.entity");
 let CategoriesService = class CategoriesService {
-    categoryRepository;
-    constructor(categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    categoryRepo;
+    constructor(categoryRepo) {
+        this.categoryRepo = categoryRepo;
     }
-    async create(dto) {
-        const category = this.categoryRepository.create({
-            name: dto.name,
-        });
-        return this.categoryRepository.save(category);
+    create(dto) {
+        const category = this.categoryRepo.create(dto);
+        return this.categoryRepo.save(category);
     }
-    async findAll() {
-        return this.categoryRepository.find({
-            order: { id: "ASC" },
-        });
+    findAll() {
+        return this.categoryRepo.find();
     }
-    async remove(id) {
-        const category = await this.categoryRepository.findOne({
-            where: { id },
-            relations: ["notes"],
-        });
-        if (!category) {
-            throw new common_1.NotFoundException("Category not found");
-        }
-        if (category.notes.length > 0) {
-            throw new Error("Cannot delete category because it is assigned to notes");
-        }
-        await this.categoryRepository.delete(id);
-        return { deleted: true };
+    remove(id) {
+        return this.categoryRepo.delete(id);
     }
 };
 exports.CategoriesService = CategoriesService;

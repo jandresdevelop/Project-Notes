@@ -1,5 +1,5 @@
 export declare class CreateNoteDto {
     title: string;
-    content?: string;
+    content: string;
     categoryId?: number;
 }

@@ -15,7 +15,6 @@ import { CategoriesModule } from "./categories/categories.module";
       database: "notes_db",
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
-      logging: true,
     }),
 
     NotesModule,

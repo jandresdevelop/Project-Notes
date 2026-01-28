@@ -27,7 +27,7 @@ __decorate([
     __metadata("design:type", String)
 ], Category.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => note_entity_1.Note, (note) => note.categories),
+    (0, typeorm_1.OneToMany)(() => note_entity_1.Note, (note) => note.category),
     __metadata("design:type", Array)
 ], Category.prototype, "notes", void 0);
 exports.Category = Category = __decorate([

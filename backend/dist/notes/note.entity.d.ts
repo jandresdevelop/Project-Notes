@@ -4,6 +4,6 @@ export declare class Note {
     title: string;
     content: string;
     isArchived: boolean;
-    categories: Category[];
+    category: Category | null;
     createdAt: Date;
 }

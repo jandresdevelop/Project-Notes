@@ -17,7 +17,7 @@ let Note = class Note {
     title;
     content;
     isArchived;
-    categories;
+    category;
     createdAt;
 };
 exports.Note = Note;
@@ -30,7 +30,7 @@ __decorate([
     __metadata("design:type", String)
 ], Note.prototype, "title", void 0);
 __decorate([
-    (0, typeorm_1.Column)("text", { nullable: true }),
+    (0, typeorm_1.Column)("text"),
     __metadata("design:type", String)
 ], Note.prototype, "content", void 0);
 __decorate([
@@ -38,12 +38,13 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Note.prototype, "isArchived", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => category_entity_1.Category, (category) => category.notes, {
+    (0, typeorm_1.ManyToOne)(() => category_entity_1.Category, (category) => category.notes, {
+        nullable: true,
+        onDelete: "SET NULL",
         eager: true,
     }),
-    (0, typeorm_1.JoinTable)(),
-    __metadata("design:type", Array)
-], Note.prototype, "categories", void 0);
+    __metadata("design:type", Object)
+], Note.prototype, "category", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

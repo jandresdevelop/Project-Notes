@@ -2,8 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
-  JoinTable,
+  ManyToOne,
   CreateDateColumn,
 } from "typeorm";
 
@@ -17,17 +16,18 @@ export class Note {
   @Column()
   title: string;
 
-  @Column("text", { nullable: true })
+  @Column("text")
   content: string;
 
   @Column({ default: false })
   isArchived: boolean;
 
-  @ManyToMany(() => Category, (category) => category.notes, {
+  @ManyToOne(() => Category, (category) => category.notes, {
+    nullable: true,
+    onDelete: "SET NULL",
     eager: true,
   })
-  @JoinTable()
-  categories: Category[];
+  category: Category | null;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -35,9 +35,7 @@ let NotesService = class NotesService {
             const category = await this.categoryRepository.findOne({
                 where: { id: dto.categoryId },
             });
-            if (category) {
-                note.categories = [category];
-            }
+            note.category = category ?? null;
         }
         return this.noteRepository.save(note);
     }
@@ -56,26 +54,23 @@ let NotesService = class NotesService {
     async update(id, dto) {
         const note = await this.noteRepository.findOne({
             where: { id },
-            relations: ["categories"],
         });
         if (!note) {
             throw new common_1.NotFoundException("Note not found");
         }
-        if (dto.title !== undefined) {
+        if (dto.title !== undefined)
             note.title = dto.title;
-        }
-        if (dto.content !== undefined) {
+        if (dto.content !== undefined)
             note.content = dto.content;
-        }
         if (dto.categoryId !== undefined) {
             if (dto.categoryId === null) {
-                note.categories = [];
+                note.category = null;
             }
             else {
                 const category = await this.categoryRepository.findOne({
                     where: { id: dto.categoryId },
                 });
-                note.categories = category ? [category] : [];
+                note.category = category ?? null;
             }
         }
         return this.noteRepository.save(note);

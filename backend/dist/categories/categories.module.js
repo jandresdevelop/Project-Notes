@@ -10,8 +10,8 @@ exports.CategoriesModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const category_entity_1 = require("./category.entity");
-const categories_service_1 = require("./categories.service");
 const categories_controller_1 = require("./categories.controller");
+const categories_service_1 = require("./categories.service");
 let CategoriesModule = class CategoriesModule {
 };
 exports.CategoriesModule = CategoriesModule;

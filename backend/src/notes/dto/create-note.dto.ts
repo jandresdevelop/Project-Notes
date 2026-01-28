@@ -4,9 +4,8 @@ export class CreateNoteDto {
   @IsString()
   title: string;
 
-  @IsOptional()
   @IsString()
-  content?: string;
+  content: string;
 
   @IsOptional()
   @IsNumber()

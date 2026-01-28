@@ -18,6 +18,10 @@ export class NotesService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
+  // ======================
+  // CREATE
+  // ======================
+
   async create(dto: CreateNoteDto) {
     const note = this.noteRepository.create({
       title: dto.title,
@@ -30,60 +34,63 @@ export class NotesService {
         where: { id: dto.categoryId },
       });
 
-      if (category) {
-        note.categories = [category];
-      }
+      note.category = category ?? null;
     }
 
     return this.noteRepository.save(note);
   }
 
-  findActive() {
+  // ======================
+  // FIND
+  // ======================
+
+  findActive(): Promise<Note[]> {
     return this.noteRepository.find({
       where: { isArchived: false },
       order: { createdAt: "DESC" },
     });
   }
 
-  findArchived() {
+  findArchived(): Promise<Note[]> {
     return this.noteRepository.find({
       where: { isArchived: true },
       order: { createdAt: "DESC" },
     });
   }
 
+  // ======================
+  // UPDATE
+  // ======================
+
   async update(id: number, dto: UpdateNoteDto) {
     const note = await this.noteRepository.findOne({
       where: { id },
-      relations: ["categories"],
     });
 
     if (!note) {
       throw new NotFoundException("Note not found");
     }
 
-    if (dto.title !== undefined) {
-      note.title = dto.title;
-    }
-
-    if (dto.content !== undefined) {
-      note.content = dto.content;
-    }
+    if (dto.title !== undefined) note.title = dto.title;
+    if (dto.content !== undefined) note.content = dto.content;
 
     if (dto.categoryId !== undefined) {
       if (dto.categoryId === null) {
-        note.categories = [];
+        note.category = null;
       } else {
         const category = await this.categoryRepository.findOne({
           where: { id: dto.categoryId },
         });
-
-        note.categories = category ? [category] : [];
+        note.category = category ?? null;
       }
     }
 
     return this.noteRepository.save(note);
   }
+
+  // ======================
+  // ARCHIVE
+  // ======================
 
   async archive(id: number): Promise<Note> {
     const note = await this.noteRepository.findOne({
@@ -110,6 +117,10 @@ export class NotesService {
     note.isArchived = false;
     return this.noteRepository.save(note);
   }
+
+  // ======================
+  // DELETE
+  // ======================
 
   async remove(id: number) {
     const result = await this.noteRepository.delete(id);

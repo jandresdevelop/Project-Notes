@@ -11,5 +11,5 @@ export class UpdateNoteDto {
 
   @IsOptional()
   @IsNumber()
-  categoryId?: number;
+  categoryId?: number | null;
 }

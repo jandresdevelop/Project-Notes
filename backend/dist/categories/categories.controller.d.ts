@@ -5,7 +5,5 @@ export declare class CategoriesController {
     constructor(service: CategoriesService);
     create(dto: CreateCategoryDto): Promise<import("./category.entity").Category>;
     findAll(): Promise<import("./category.entity").Category[]>;
-    remove(id: string): Promise<{
-        deleted: boolean;
-    }>;
+    remove(id: string): Promise<import("typeorm").DeleteResult>;
 }

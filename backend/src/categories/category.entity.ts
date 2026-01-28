@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Note } from "../notes/note.entity";
 
 @Entity("categories")
@@ -9,6 +9,6 @@ export class Category {
   @Column({ unique: true })
   name: string;
 
-  @ManyToMany(() => Note, (note) => note.categories)
+  @OneToMany(() => Note, (note) => note.category)
   notes: Note[];
 }
