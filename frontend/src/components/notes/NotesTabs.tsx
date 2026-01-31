@@ -5,27 +5,25 @@ interface Props {
 
 const NotesTabs = ({ active, onChange }: Props) => {
   return (
-    <ul className="nav nav-tabs mt-3">
-      <li className="nav-item">
-        <button
-          type="button"
-          className={`nav-link ${active === "active" ? "active" : ""}`}
-          onClick={() => onChange("active")}
-        >
-          Activas
-        </button>
-      </li>
+    <div className="notes-tabs">
+      <button
+        type="button"
+        className={`notes-tabs__btn ${active === "active" ? "is-active" : ""}`}
+        onClick={() => onChange("active")}
+      >
+        📄 Activas
+      </button>
 
-      <li className="nav-item">
-        <button
-          type="button"
-          className={`nav-link ${active === "archived" ? "active" : ""}`}
-          onClick={() => onChange("archived")}
-        >
-          Archivadas
-        </button>
-      </li>
-    </ul>
+      <button
+        type="button"
+        className={`notes-tabs__btn ${
+          active === "archived" ? "is-active" : ""
+        }`}
+        onClick={() => onChange("archived")}
+      >
+        📦 Archivadas
+      </button>
+    </div>
   );
 };
 

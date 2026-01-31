@@ -1,0 +1,40 @@
+.category-panel {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+}
+
+.category-panel__title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.category-panel__form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.category-panel__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-panel__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.category-panel__item:last-child {
+  border-bottom: none;
+}
+
+.category-panel__actions {
+  display: flex;
+  gap: 0.4rem;
+}

@@ -1,0 +1,44 @@
+.navbar-app {
+  background-color: var(--bg-card);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0.75rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar-app__brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-app__links {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar-app__link {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.navbar-app__link:hover {
+  background-color: var(--bg-soft);
+  color: var(--text-main);
+}
+
+.navbar-app__link.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+.navbar-app__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

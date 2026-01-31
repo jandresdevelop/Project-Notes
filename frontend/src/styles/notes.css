@@ -1,9 +1,16 @@
-@import "./variables.css";
-@import "./base.css";
-@import "./layout.css";
-@import "./buttons.css";
-@import "./cards.css";
-@import "./forms.css";
-@import "./navbar.css";
-@import "./tabs.css";
-@import "./dark-mode.css";
+/* base */
+@import "./base/variables.css";
+@import "./base/layout.css";
+@import "./base/animations.css";
+
+/* notes */
+@import "./notes/NoteCard.css";
+@import "./notes/NoteForm.css";
+@import "./notes/NotesTabs.css";
+
+/* categories */
+@import "./categories/CategoryPanel.css";
+
+/* ui */
+@import "./ui/Navbar.css";
+@import "./ui/DarkModeToggle.css";

@@ -1,0 +1,25 @@
+.dark-toggle {
+  background-color: var(--bg-soft);
+  border-radius: 999px;
+  padding: 0.35rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.dark-toggle__btn {
+  border: none;
+  background: transparent;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.dark-toggle__btn.active {
+  background-color: var(--primary);
+  color: white;
+}

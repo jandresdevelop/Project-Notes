@@ -18,10 +18,6 @@ export class NotesService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  // ======================
-  // CREATE
-  // ======================
-
   async create(dto: CreateNoteDto) {
     const note = this.noteRepository.create({
       title: dto.title,
@@ -40,10 +36,6 @@ export class NotesService {
     return this.noteRepository.save(note);
   }
 
-  // ======================
-  // FIND
-  // ======================
-
   findActive(): Promise<Note[]> {
     return this.noteRepository.find({
       where: { isArchived: false },
@@ -57,10 +49,6 @@ export class NotesService {
       order: { createdAt: "DESC" },
     });
   }
-
-  // ======================
-  // UPDATE
-  // ======================
 
   async update(id: number, dto: UpdateNoteDto) {
     const note = await this.noteRepository.findOne({
@@ -88,10 +76,6 @@ export class NotesService {
     return this.noteRepository.save(note);
   }
 
-  // ======================
-  // ARCHIVE
-  // ======================
-
   async archive(id: number): Promise<Note> {
     const note = await this.noteRepository.findOne({
       where: { id },
@@ -117,10 +101,6 @@ export class NotesService {
     note.isArchived = false;
     return this.noteRepository.save(note);
   }
-
-  // ======================
-  // DELETE
-  // ======================
 
   async remove(id: number) {
     const result = await this.noteRepository.delete(id);

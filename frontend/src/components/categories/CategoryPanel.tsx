@@ -34,42 +34,62 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
   };
 
   return (
-    <div className="card shadow-sm">
-      <div className="card-body">
-        <h5 className="card-title mb-3">📂 Categorías</h5>
-
-        {/* FORM */}
-        <form className="d-flex gap-2 mb-3" onSubmit={handleSubmit}>
-          <input
-            className="form-control"
-            placeholder="Nombre de categoría"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          <button className="btn btn-primary" type="submit">
-            {editingId !== null ? "Actualizar" : "Crear"}
-          </button>
+    <div className="card shadow-sm rounded-4 fade-in">
+      <div className="card-body p-4">
+        {/* HEADER */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h5 className="mb-0 fw-semibold">📂 Gestión de categorías</h5>
 
           {editingId !== null && (
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={() => setEditingId(null)}
-            >
-              Cancelar
-            </button>
+            <span className="badge bg-warning text-dark">Editando</span>
           )}
+        </div>
+
+        {/* FORM */}
+        <form
+          className="row g-2 align-items-center mb-4"
+          onSubmit={handleSubmit}
+        >
+          <div className="col flex-grow-1">
+            <input
+              className="form-control form-control-lg"
+              placeholder="Nombre de la categoría"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          <div className="col-auto d-flex gap-2">
+            <button className="btn btn-primary px-4" type="submit">
+              {editingId !== null ? "Actualizar" : "Crear"}
+            </button>
+
+            {editingId !== null && (
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => setEditingId(null)}
+              >
+                Cancelar
+              </button>
+            )}
+          </div>
         </form>
 
         {/* LIST */}
         <ul className="list-group list-group-flush">
+          {categories.length === 0 && (
+            <li className="list-group-item text-muted text-center py-4">
+              No hay categorías creadas
+            </li>
+          )}
+
           {categories.map((cat) => (
             <li
               key={cat.id}
-              className="list-group-item d-flex justify-content-between align-items-center"
+              className="list-group-item d-flex justify-content-between align-items-center py-3"
             >
-              <span>{cat.name}</span>
+              <span className="fw-medium">{cat.name}</span>
 
               <div className="btn-group btn-group-sm">
                 <button
@@ -79,14 +99,14 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
                     setName(cat.name);
                   }}
                 >
-                  Editar
+                  ✏️ Editar
                 </button>
 
                 <button
                   className="btn btn-outline-danger"
                   onClick={() => onDelete(cat.id)}
                 >
-                  Eliminar
+                  🗑 Eliminar
                 </button>
               </div>
             </li>

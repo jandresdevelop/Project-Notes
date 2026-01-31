@@ -42,11 +42,7 @@ const NoteForm = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const payload = {
-      title,
-      content,
-      categoryId,
-    };
+    const payload = { title, content, categoryId };
 
     if (editingNote) {
       await onUpdate(editingNote.id, payload);
@@ -60,50 +56,58 @@ const NoteForm = ({
   };
 
   return (
-    <form className="card card-body mb-4" onSubmit={handleSubmit}>
-      <h5 className="mb-3">{editingNote ? "Editar nota" : "Nueva nota"}</h5>
+    <form className="note-form" onSubmit={handleSubmit}>
+      <h5 className="note-form__title">
+        {editingNote ? "✏️ Editar nota" : "➕ Nueva nota"}
+      </h5>
 
-      <input
-        className="form-control mb-2"
-        placeholder="Título"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
+      <div className="note-form__field">
+        <input
+          className="form-control"
+          placeholder="Título"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
 
-      <textarea
-        className="form-control mb-2"
-        placeholder="Contenido"
-        rows={4}
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
-      />
+      <div className="note-form__field">
+        <textarea
+          className="form-control"
+          placeholder="Contenido"
+          rows={4}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+        />
+      </div>
 
-      <select
-        className="form-select mb-3"
-        value={categoryId ?? ""}
-        onChange={(e) =>
-          setCategoryId(e.target.value ? Number(e.target.value) : undefined)
-        }
-      >
-        <option value="">Sin categoría</option>
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
+      <div className="note-form__field">
+        <select
+          className="form-select"
+          value={categoryId ?? ""}
+          onChange={(e) =>
+            setCategoryId(e.target.value ? Number(e.target.value) : undefined)
+          }
+        >
+          <option value="">Sin categoría</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <div className="d-flex gap-2">
-        <button className="btn btn-primary" type="submit">
-          {editingNote ? "Actualizar" : "Crear"}
+      <div className="note-form__actions">
+        <button type="submit" className="btn btn-primary">
+          {editingNote ? "Actualizar" : "Crear nota"}
         </button>
 
         {editingNote && (
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-outline-secondary"
             onClick={onCancelEdit}
           >
             Cancelar
