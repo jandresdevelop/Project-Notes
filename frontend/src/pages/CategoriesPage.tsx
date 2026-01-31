@@ -1,58 +1,59 @@
 import { useEffect, useState } from "react";
-import type { Category } from "../types/category";
+
 import {
   getCategories,
   createCategory,
+  updateCategory,
   deleteCategory,
 } from "../api/categories.api";
 
-import "../styles/categories.css";
+import type { Category } from "../types/category";
 
-function CategoriesPage() {
+import CategoryPanel from "../components/categories/CategoryPanel";
+
+const CategoriesPage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [name, setName] = useState("");
 
-  const load = async () => {
+  const loadCategories = async () => {
     const data = await getCategories();
     setCategories(data);
   };
 
   useEffect(() => {
-    load();
+    loadCategories();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim()) return;
+  const handleCreate = async (name: string) => {
+    const created = await createCategory(name);
+    setCategories((prev) => [...prev, created]);
+  };
 
-    await createCategory(name);
-    setName("");
-    load();
+  const handleUpdate = async (id: number, name: string) => {
+    const updated = await updateCategory(id, name);
+    setCategories((prev) => prev.map((c) => (c.id === id ? updated : c)));
+  };
+
+  const handleDelete = async (id: number) => {
+    await deleteCategory(id);
+    setCategories((prev) => prev.filter((c) => c.id !== id));
   };
 
   return (
-    <div className="categories-container">
-      <h1>📂 Categories</h1>
+    <div className="container py-4">
+      <h2 className="mb-4">📂 Categorías</h2>
 
-      <form onSubmit={handleSubmit} className="category-form">
-        <input
-          placeholder="Category name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button>Create</button>
-      </form>
-
-      <ul>
-        {categories.map((cat) => (
-          <li key={cat.id}>
-            {cat.name}
-            <button onClick={() => deleteCategory(cat.id)}>✕</button>
-          </li>
-        ))}
-      </ul>
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <CategoryPanel
+            categories={categories}
+            onCreate={handleCreate}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
+          />
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default CategoriesPage;

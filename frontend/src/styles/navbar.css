@@ -1,22 +1,18 @@
 .navbar {
-  height: 56px;
-  background: var(--card);
+  background: var(--bg-card);
   border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
 }
 
-.navbar span {
-  font-weight: 600;
-  font-size: 18px;
+.navbar-brand {
+  font-size: 1.2rem;
 }
 
-.navbar button {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
+.nav-link {
   color: var(--text);
+  padding: 0.5rem;
+}
+
+.nav-link.active {
+  color: var(--primary);
+  font-weight: 600;
 }

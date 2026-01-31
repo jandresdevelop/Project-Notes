@@ -1,7 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
-
-import type { Note } from "../types/note";
-import type { Category } from "../types/category";
+import { useEffect, useState } from "react";
 
 import {
   getActiveNotes,
@@ -15,228 +12,109 @@ import {
 
 import { getCategories } from "../api/categories.api";
 
-import "../styles/notes.css";
+import type { Note } from "../types/note";
+import type { Category } from "../types/category";
 
-function NotesPage() {
-  // ======================
-  // STATE
-  // ======================
+import NoteForm from "../components/notes/NoteForm";
+import NoteCard from "../components/notes/NoteCard";
+import NotesTabs from "../components/notes/NotesTabs";
 
+const NotesPage = () => {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [archivedNotes, setArchivedNotes] = useState<Note[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [showArchived, setShowArchived] = useState(false);
-
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [categoryId, setCategoryId] = useState<number | "">("");
-
   const [editingNote, setEditingNote] = useState<Note | null>(null);
-
-  // ======================
-  // LOADERS
-  // ======================
-
-  const loadNotes = useCallback(async () => {
-    const data = showArchived
-      ? await getArchivedNotes()
-      : await getActiveNotes();
-
-    setNotes(data);
-  }, [showArchived]);
-
-  const loadCategories = useCallback(async () => {
-    const data = await getCategories();
-    setCategories(data);
-  }, []);
-
-  // ======================
-  // EFFECTS (SIN ERRORES)
-  // ======================
+  const [activeTab, setActiveTab] = useState<"active" | "archived">("active");
 
   useEffect(() => {
-    loadNotes();
-  }, [loadNotes]);
+    const load = async () => {
+      const [active, archived, cats] = await Promise.all([
+        getActiveNotes(),
+        getArchivedNotes(),
+        getCategories(),
+      ]);
 
-  useEffect(() => {
-    loadCategories();
-  }, [loadCategories]);
-
-  // ======================
-  // CREATE / UPDATE
-  // ======================
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const payload = {
-      title,
-      content,
-      categoryId: categoryId === "" ? undefined : categoryId,
+      setNotes(active);
+      setArchivedNotes(archived);
+      setCategories(cats);
     };
 
-    if (editingNote) {
-      await updateNote(editingNote.id, payload);
-    } else {
-      await createNote(payload);
-    }
+    load();
+  }, []);
 
-    setTitle("");
-    setContent("");
-    setCategoryId("");
-    setEditingNote(null);
-
-    await loadNotes();
+  const handleCreate = async (payload: {
+    title: string;
+    content: string;
+    categoryId?: number;
+  }) => {
+    const note = await createNote(payload);
+    setNotes((prev) => [note, ...prev]);
   };
 
-  // ======================
-  // ACTIONS
-  // ======================
+  const handleUpdate = async (
+    id: number,
+    payload: {
+      title: string;
+      content: string;
+      categoryId?: number;
+    },
+  ) => {
+    const updated = await updateNote(id, payload);
 
-  const handleEdit = (note: Note) => {
-    setEditingNote(note);
-    setTitle(note.title);
-    setContent(note.content);
+    setNotes((prev) => prev.map((n) => (n.id === id ? updated : n)));
 
-    setCategoryId(note.categories?.[0]?.id ?? "");
+    setArchivedNotes((prev) => prev.map((n) => (n.id === id ? updated : n)));
+
+    setEditingNote(null);
   };
 
   const handleDelete = async (id: number) => {
     await deleteNote(id);
-    await loadNotes();
+    setNotes((prev) => prev.filter((n) => n.id !== id));
+    setArchivedNotes((prev) => prev.filter((n) => n.id !== id));
   };
 
   const handleArchive = async (id: number) => {
-    await archiveNote(id);
-    await loadNotes();
+    const updated = await archiveNote(id);
+    setNotes((prev) => prev.filter((n) => n.id !== id));
+    setArchivedNotes((prev) => [updated, ...prev]);
   };
 
   const handleUnarchive = async (id: number) => {
-    await unarchiveNote(id);
-    await loadNotes();
+    const updated = await unarchiveNote(id);
+    setArchivedNotes((prev) => prev.filter((n) => n.id !== id));
+    setNotes((prev) => [updated, ...prev]);
   };
 
-  // ======================
-  // RENDER
-  // ======================
-
   return (
-    <div className="notes-container">
-      <h1 className="title">📝 Notes App</h1>
+    <div className="container py-4">
+      <h2 className="mb-4">📝 Notes</h2>
 
-      {/* TABS */}
-      <div className="tabs">
-        <button
-          className={!showArchived ? "tab active" : "tab"}
-          onClick={() => setShowArchived(false)}
-        >
-          Active Notes
-        </button>
+      <NoteForm
+        categories={categories}
+        editingNote={editingNote}
+        onCreate={handleCreate}
+        onUpdate={handleUpdate}
+        onCancelEdit={() => setEditingNote(null)}
+      />
 
-        <button
-          className={showArchived ? "tab active" : "tab"}
-          onClick={() => setShowArchived(true)}
-        >
-          Archived Notes
-        </button>
-      </div>
+      <NotesTabs active={activeTab} onChange={setActiveTab} />
 
-      {/* FORM */}
-      {!showArchived && (
-        <form className="note-form" onSubmit={handleSubmit}>
-          <input
-            className="form-control"
-            placeholder="Title"
-            value={title}
-            required
-            onChange={(e) => setTitle(e.target.value)}
-          />
-
-          <textarea
-            className="form-control"
-            placeholder="Content"
-            value={content}
-            required
-            onChange={(e) => setContent(e.target.value)}
-          />
-
-          <select
-            value={categoryId}
-            onChange={(e) =>
-              setCategoryId(e.target.value === "" ? "" : Number(e.target.value))
-            }
-          >
-            <option value="">Sin categoría</option>
-
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-
-          <button className="btn btn-primary" type="submit">
-            {editingNote ? "Update note" : "Create note"}
-          </button>
-        </form>
-      )}
-
-      {/* NOTES */}
-      <div className="notes-grid">
-        {notes.map((note) => (
-          <div key={note.id} className="note-card">
-            <h3>{note.title}</h3>
-            <p>{note.content}</p>
-
-            <div className="tags">
-              <div>
-                {note.categories.map((cat) => (
-                  <span key={cat.id} className="tag">
-                    #{cat.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="actions">
-              {!note.isArchived && (
-                <>
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => handleEdit(note)}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    className="btn btn-warning"
-                    onClick={() => handleArchive(note.id)}
-                  >
-                    Archive
-                  </button>
-                </>
-              )}
-
-              {note.isArchived && (
-                <button
-                  className="btn btn-success"
-                  onClick={() => handleUnarchive(note.id)}
-                >
-                  Unarchive
-                </button>
-              )}
-
-              <button
-                className="btn btn-danger"
-                onClick={() => handleDelete(note.id)}
-              >
-                Delete
-              </button>
-            </div>
+      <div className="row g-3 mt-3">
+        {(activeTab === "active" ? notes : archivedNotes).map((note) => (
+          <div className="col-md-4" key={note.id}>
+            <NoteCard
+              note={note}
+              onEdit={() => setEditingNote(note)}
+              onDelete={() => handleDelete(note.id)}
+              onArchive={() => handleArchive(note.id)}
+              onUnarchive={() => handleUnarchive(note.id)}
+            />
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default NotesPage;

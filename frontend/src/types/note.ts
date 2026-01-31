@@ -6,6 +6,5 @@ export interface Note {
   content: string;
   isArchived: boolean;
   createdAt: string;
-
-  categories: Category[];
+  category?: Category | null;
 }
