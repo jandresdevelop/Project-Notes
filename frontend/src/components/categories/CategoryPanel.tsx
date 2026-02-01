@@ -50,7 +50,7 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
             <span className="badge bg-warning text-dark">Editando</span>
           )}
         </div>
-          <div className="col flex-grow-1">
+          <div className="note-form__field">
             <input
               className="form-control form-control-lg"
               placeholder="Nombre de la categoría"
