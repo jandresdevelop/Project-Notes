@@ -36,15 +36,16 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
   return (
     <div className="card shadow-sm rounded-4 fade-in">
       <div className="card-body p-4">
+        <div className="thirds">                        <h2 className="mb-4">📂Crear Categorías 📂</h2>
+</div>
+
         {/* HEADER */}
 
         {/* FORM */}
         <form
           className="form note-form  row g-2 align-items-center mb-4"
           onSubmit={handleSubmit}
-        >
-                <h2 className="mb-4">📂Crear Categorías 📂</h2>
-                        <div className="d-flex justify-content-between align-items-center mb-4">
+        >                        <div className="d-flex justify-content-between align-items-center mb-4">
 
           {editingId !== null && (
             <span className="badge bg-warning text-dark">Editando</span>
