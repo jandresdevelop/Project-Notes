@@ -8,14 +8,17 @@ This project was developed as a technical exercise and follows professional back
 
 ## Features
 
-### Phase 1 – Notes
+### – Notes
 
 - Create notes
 - Edit notes
 - Delete notes
+- file notes
+- Unfile notes
+  
+### – Categories
 
-### Phase 2 – Categories (Extra)
-
+- Create categories
 - Assign categories to notes
 
 ---
@@ -219,12 +222,6 @@ Each note may have zero or more categories.
 - No in‑memory storage is used
 - All data is persisted in MySQL
 - Project follows clean architecture principles
-
----
-
-## Author
-
-Developed as a full‑stack technical exercise using modern best practices.
 
 ---
 
