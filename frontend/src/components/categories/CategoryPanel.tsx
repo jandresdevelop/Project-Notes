@@ -43,7 +43,7 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
           className="form note-form  row g-2 align-items-center mb-4"
           onSubmit={handleSubmit}
         >
-                <h2 className="mb-4">📂 Categorías</h2>
+                <h2 className="mb-4">📂Crear Categorías 📂</h2>
                         <div className="d-flex justify-content-between align-items-center mb-4">
 
           {editingId !== null && (
@@ -59,7 +59,7 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
             />
           </div>
 
-          <div className="col-auto d-flex gap-2">
+          <div className="note-form__actions col-auto d-flex gap-2">
             <button className="btn btn-primary px-4" type="submit">
               {editingId !== null ? "Actualizar" : "Crear"}
             </button>
@@ -67,7 +67,7 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
             {editingId !== null && (
               <button
                 type="button"
-                className="btn btn-outline-secondary"
+                className="cancel-btn btn btn-outline-primary"
                 onClick={() => setEditingId(null)}
               >
                 Cancelar
@@ -77,6 +77,10 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
         </form>
 
         {/* LIST */}
+                        <div className="thirds">
+                          <h2 className="mb-4">📂 Categorías 📂</h2>
+                        </div>
+
         <div className="task-list row g-3 mt-3 list-group list-group-flush">
           {categories.length === 0 && (
             <li className="list-group-item text-muted text-center py-4">

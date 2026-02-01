@@ -103,7 +103,7 @@ const NoteForm = ({
         {editingNote && (
           <button
             type="button"
-            className="btn btn-outline-secondary"
+            className="cancel-btn btn btn-outline-primary"
             onClick={onCancelEdit}
           >
             Cancelar
