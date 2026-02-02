@@ -6,7 +6,7 @@ interface Props {
 const NotesTabs = ({ active, onChange }: Props) => {
   return (
     <div className="thirds">
-      <h2 className="mb-4">📝 Notes 📝</h2>
+      <h2 className="mb-4">📝 Notas 📝</h2>
 
       <div className="notes-tabs">
         <button
