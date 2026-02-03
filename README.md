@@ -2,8 +2,6 @@
 
 Full‑stack web application for note management with categories and filtering.
 
-This project was developed as a technical exercise and follows professional backend and frontend architecture practices.
-
 ---
 
 ## Features
