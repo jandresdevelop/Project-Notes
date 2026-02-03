@@ -1,7 +1,7 @@
-import { IsString, MinLength } from "class-validator";
+import { IsString, Length } from "class-validator";
 
 export class CreateCategoryDto {
   @IsString()
-  @MinLength(2)
+  @Length(2, 50)
   name: string;
 }

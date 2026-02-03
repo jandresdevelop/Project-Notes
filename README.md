@@ -15,10 +15,12 @@ This project was developed as a technical exercise and follows professional back
 - Delete notes
 - file notes
 - Unfile notes
-  
+
 ### – Categories
 
 - Create categories
+- Delete categories
+- Edit categories
 - Assign categories to notes
 
 ---

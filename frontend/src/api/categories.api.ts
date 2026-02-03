@@ -15,7 +15,7 @@ export const updateCategory = async (
   id: number,
   name: string,
 ): Promise<Category> => {
-  const res = await axios.put(`/categories/${id}`, { name });
+  const res = await axios.patch(`/categories/${id}`, { name });
   return res.data;
 };
 

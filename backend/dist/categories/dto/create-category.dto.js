@@ -17,7 +17,7 @@ class CreateCategoryDto {
 exports.CreateCategoryDto = CreateCategoryDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(2),
+    (0, class_validator_1.Length)(2, 50),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "name", void 0);
 //# sourceMappingURL=create-category.dto.js.map
