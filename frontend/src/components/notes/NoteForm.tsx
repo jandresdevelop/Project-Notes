@@ -60,7 +60,7 @@ const NoteForm = ({
       <div className="note-form__field">
         <input
           className="form-control"
-          placeholder="Título"
+          placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
@@ -70,7 +70,7 @@ const NoteForm = ({
       <div className="note-form__field">
         <textarea
           className="form-control"
-          placeholder="Contenido"
+          placeholder="Content"
           rows={4}
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -86,7 +86,7 @@ const NoteForm = ({
             setCategoryId(e.target.value ? Number(e.target.value) : undefined)
           }
         >
-          <option value="">Sin categoría</option>
+          <option value="">Uncategorized</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -97,7 +97,7 @@ const NoteForm = ({
 
       <div className="note-form__actions">
         <button type="submit" className="btn btn-primary">
-          {editingNote ? "Actualizar" : "Crear nota"}
+          {editingNote ? "Update" : "Create note"}
         </button>
 
         {editingNote && (
@@ -106,7 +106,7 @@ const NoteForm = ({
             className="cancel-btn btn btn-outline-primary"
             onClick={onCancelEdit}
           >
-            Cancelar
+            Cancel
           </button>
         )}
       </div>

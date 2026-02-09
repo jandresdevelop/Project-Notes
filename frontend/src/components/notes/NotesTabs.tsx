@@ -6,7 +6,7 @@ interface Props {
 const NotesTabs = ({ active, onChange }: Props) => {
   return (
     <div className="thirds">
-      <h2 className="mb-4">📝 Notas 📝</h2>
+      <h2 className="mb-4">📝 Notes 📝</h2>
 
       <div className="notes-tabs">
         <button
@@ -14,7 +14,7 @@ const NotesTabs = ({ active, onChange }: Props) => {
           className={`notes-tabs__btn ${active === "active" ? "is-active" : ""}`}
           onClick={() => onChange("active")}
         >
-          📄 Activas
+          📄 Active
         </button>
 
         <button
@@ -24,7 +24,7 @@ const NotesTabs = ({ active, onChange }: Props) => {
           }`}
           onClick={() => onChange("archived")}
         >
-          📦 Archivadas
+          📦 Archived
         </button>
       </div>
     </div>

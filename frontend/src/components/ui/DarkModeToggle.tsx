@@ -21,7 +21,7 @@ const DarkModeToggle = () => {
 
   return (
     <button className="theme-btn btn btn-outline- btn-sm" onClick={toggle}>
-      {dark ? "☀️ Claro" : "🌙 Oscuro"}
+      {dark ? "☀️ Clear" : "🌙 Dark"}
     </button>
   );
 };

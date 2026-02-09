@@ -36,8 +36,10 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
   return (
     <div className="card shadow-sm rounded-4 fade-in">
       <div className="card-body p-4">
-        <div className="thirds">                        <h2 className="mb-4">📂Crear Categorías 📂</h2>
-</div>
+        <div className="thirds">
+          {" "}
+          <h2 className="mb-4">📂Create Categories 📂</h2>
+        </div>
 
         {/* HEADER */}
 
@@ -45,24 +47,24 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
         <form
           className="form note-form  row g-2 align-items-center mb-4"
           onSubmit={handleSubmit}
-        >                        <div className="d-flex justify-content-between align-items-center mb-4">
-
-          {editingId !== null && (
-            <span className="badge bg-warning text-dark">Editando</span>
-          )}
-        </div>
+        >
+          {" "}
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            {editingId !== null && (
+              <span className="badge bg-warning text-dark">Editing</span>
+            )}
+          </div>
           <div className="note-form__field">
             <input
               className="form-control form-control-lg"
-              placeholder="Nombre de la categoría"
+              placeholder="Categories name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-
           <div className="note-form__actions col-auto d-flex gap-2">
             <button className="btn btn-primary px-4" type="submit">
-              {editingId !== null ? "Actualizar" : "Crear"}
+              {editingId !== null ? "Update" : "Create"}
             </button>
 
             {editingId !== null && (
@@ -71,21 +73,22 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
                 className="cancel-btn btn btn-outline-primary"
                 onClick={() => setEditingId(null)}
               >
-                Cancelar
+                Cancel
               </button>
             )}
           </div>
         </form>
 
         {/* LIST */}
-                        <div className="thirds">
-                          <h2 className="mb-4">📂 Categorías 📂</h2>
-                        </div>
+        <div className="thirds">
+          <h2 className="mb-4">📂 Categories 📂</h2>
+        </div>
 
         <div className="task-list row g-3 mt-3 list-group list-group-flush">
           {categories.length === 0 && (
             <li className="list-group-item text-muted text-center py-4">
-              No hay categorías creadas
+              There is no categories created yet. Create one to start organizing
+              your notes!
             </li>
           )}
 
@@ -95,29 +98,29 @@ const CategoryPanel = ({ categories, onCreate, onUpdate, onDelete }: Props) => {
               className="col-md-4 list-group-item d-flex justify-content-between align-items-center py-3"
             >
               <div className="note-card">
-              <span className="fw-medium">{cat.name}</span>
+                <span className="fw-medium">{cat.name}</span>
 
-              <div className="btn-group btn-group-sm">
-                <p className="note-card__content"></p>
-                <div className="note-card__actions-left">
-                <button
-                  className="edit-btn btn btn-sm btn-outline-primary"
-                  onClick={() => {
-                    setEditingId(cat.id);
-                    setName(cat.name);
-                  }}
-                >
-                  Editar
-                </button>
+                <div className="btn-group btn-group-sm">
+                  <p className="note-card__content"></p>
+                  <div className="note-card__actions-left">
+                    <button
+                      className="edit-btn btn btn-sm btn-outline-primary"
+                      onClick={() => {
+                        setEditingId(cat.id);
+                        setName(cat.name);
+                      }}
+                    >
+                      Edit
+                    </button>
 
-                <button
-                  className="delete-btn btn btn-sm btn-outline-danger"
-                  onClick={() => onDelete(cat.id)}
-                >
-                  Eliminar
-                </button>
+                    <button
+                      className="delete-btn btn btn-sm btn-outline-danger"
+                      onClick={() => onDelete(cat.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
           ))}
